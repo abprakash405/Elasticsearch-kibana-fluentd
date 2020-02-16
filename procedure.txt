@@ -1,0 +1,32 @@
+****Note: 
+This procedure works well for AZURE KUBERNETES AKS 
+
+-----------------------------------------------------------------------------
+kubectl create namespace kube-logging
+kubectl apply -f storageclass.yml 
+kubectl apply -f elasticsearch-svc.yml 
+kubectl apply -f elasticsearch-statefulsets.yml 
+after 5 minutes, statefulsets pods will be ready. 
+http://yourip-elasticsearch-svc:9200/
+
+kubectl apply -f kibana-deployment.yml 
+kubectl apply -f kibana-svc.yml 
+http://yourip-kibana:5601/ 
+
+
+kubectl apply -f fluentd.yml 
+#daemonsets 
+kubectl get ds
+
+kubectl apply -f test-log-pod.yml 
+
+#it is taking 15 mnts for elasticsearch containers to get started. 
+
+#we have deployed elasticsearc, kibana, fluentd daemon sets in a separate namespace
+called kube-logging. 
+From this namespace, it is able to capture all logs of all pods deployed in different namespaces
+
+
+
+
+
